@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <form action="">
+        <input type="text" id="user_name" placeholder="input name">
+        <input type="password" id="user_pwd" placeholder="input pwd">
+        <button class="login">로그인</button>
+        <button class="update">수정</button>
+    </form>
+
+    <script>
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (event)=>{
+            event.preventDefault();
+        })
+
+        const login_btn = document.querySelector('.login');
+        login_btn.addEventListener('click', ()=>{
+            const input = document.querySelector('#user_name');
+            const pwd = document.querySelector('#user_pwd');
+            console.log(input.value, pwd.value);
+            // localhost:4500/login
+            // 입력된 데이터 확인
+
+            const  user = {name : input.value, pwd : pwd.value};
+            
+            // const name = document.querySelector('#user_name').value;
+            // const pwd = document.querySelector('#user_pwd').value;
+            // const user = {user, pwd};
+
+            fetch('http://localhost:4500/login', {
+                method: 'POST', //PUT, DELETE...
+                headers: {'content-type' : 'application/json; utf-8'},
+                body: JSON.stringify(user)
+            }).then(res=>res.json())
+            .then(res=>console.log(res))
+        })
+
+        const update_btn = document.querySelector('.update');
+        update_btn.addEventListener('click', ()=>{
+            const name = document.querySelector('#user_name');
+            const pwd = document.querySelector('#user_pwd');
+
+            const update_user = {name : name.value, pwd : pwd.value};
+
+            fetch('http://localhost:4500/login', {
+                method: 'PUT',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify(update_user)
+            }).then(res=>res.json)
+            .then(res=>console.log(res))
+        });
+    </script>
+</body>
+</html>
